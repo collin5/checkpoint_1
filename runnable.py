@@ -1,10 +1,20 @@
 # @Author: collins
 # @Date:   2017-06-09T11:36:19+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-09T12:55:29+03:00
+# @Last modified time: 2017-06-09T15:24:22+03:00
 
+"""
+Usage:
+    create_room <room_name>...
+
+Options:
+    --version
+
+"""
 
 from cmd import Cmd
+from docopt import docopt, DocoptExit
+import sys
 
 version = 0
 str_launch = """"
@@ -16,8 +26,31 @@ class Console(Cmd):
     def __init__(self):
         super(Console, self).__init__()
 
+    def with_docopt(func):
+        def execute(*args, **kwargs):
+            # set args & function name as system arguments for docopt to be able to pick them
+            sys.argv = [func.__name__[3:]] + list(args)[1:]
+
+            try:
+                doc_Args = docopt(func.__doc__, version=version)
+
+                # Add func name which is previously stripped off
+                # Also remove do_ prefix from function name
+                doc_Args.update({func.__name__[3:]: True})
+
+            except DocoptExit as e:
+                print("Invalid command")
+                return
+            except SystemExit as e:
+                return  # Keep Amity instance in case of System Exit
+            finally:
+                return
+
+        return execute
+
+    @with_docopt
     def do_create_room(self, args):
-        """create_room  <room_name> ... """
+        """Usage: create_room <room_name>..."""
         pass
 
     def do_version(self, args):

@@ -1,7 +1,7 @@
 # @Author: collins
 # @Date:   2017-06-09T12:14:44+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-09T13:17:26+03:00
+# @Last modified time: 2017-06-09T14:53:07+03:00
 
 from enum import Enum
 
@@ -22,7 +22,7 @@ class Amity(list):
         super(Dojo, self).__init__()
 
     def create_room(self, *args):
-        pass
+        return 'Ok'
 
     def add_person(self, person_name, type, accomodation=False):
         pass
