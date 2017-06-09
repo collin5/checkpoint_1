@@ -1,7 +1,7 @@
 # @Author: collins
 # @Date:   2017-06-09T11:36:19+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-09T15:34:09+03:00
+# @Last modified time: 2017-06-09T18:47:08+03:00
 
 """
 Usage:
@@ -15,9 +15,11 @@ Options:
 from cmd import Cmd
 from docopt import docopt, DocoptExit
 import sys
+from interface import AmityInterface
+from constants import *
 
 version = 0
-str_launch = """"
+intro = """"
 Type \'help\' for instructions
 """
 
@@ -26,7 +28,13 @@ class Cli(Cmd):
     def __init__(self):
         super(Cli, self).__init__()
 
+    @staticmethod
+    @AmityInterface
+    def call_amity(action=None, *args):
+        pass
+
     def with_docopt(func):
+
         def execute(*args, **kwargs):
             # set args & function name as system arguments for docopt to be able to pick them
             sys.argv = [func.__name__[3:]] + list(args)[1:]
@@ -37,6 +45,10 @@ class Cli(Cmd):
                 # Add func name which is previously stripped off
                 # Also remove do_ prefix from function name
                 doc_Args.update({func.__name__[3:]: True})
+
+                if 'create_room' in doc_Args:
+
+                    Cli.call_amity(Action.CREATE_ROOM, doc_Args['<room_name>'])
 
             except DocoptExit as e:
                 print("Invalid command")
@@ -51,12 +63,10 @@ class Cli(Cmd):
     @with_docopt
     def do_create_room(self, args):
         """Usage: create_room <room_name>..."""
-        pass
 
     @with_docopt
     def do_add_person(self, args):
         """Usage: add_person <person_firstname> <person_lastname> <FELLOW_or_STAFF> [<wants_accommodation>] """
-        pass
 
     @with_docopt
     def do_reallocate_person(self, args):
@@ -98,4 +108,4 @@ class Cli(Cmd):
 if __name__ == '__main__':
     cli = Cli()
     cli.prompt = " Amity $ "
-    cli.cmdloop(str_launch)
+    cli.cmdloop(intro)
