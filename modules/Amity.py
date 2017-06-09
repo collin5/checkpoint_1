@@ -1,7 +1,7 @@
 # @Author: collins
 # @Date:   2017-06-09T12:14:44+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-09T12:54:56+03:00
+# @Last modified time: 2017-06-09T13:17:26+03:00
 
 from enum import Enum
 
@@ -24,7 +24,7 @@ class Amity(list):
     def create_room(self, *args):
         pass
 
-    def add_person(self, person_name, type, accomodation='N'):
+    def add_person(self, person_name, type, accomodation=False):
         pass
 
     def reallocate_person(self, id, room_name):
