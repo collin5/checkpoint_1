@@ -1,7 +1,7 @@
 # @Author: collins
 # @Date:   2017-06-09T11:36:19+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-09T15:24:22+03:00
+# @Last modified time: 2017-06-09T15:34:09+03:00
 
 """
 Usage:
@@ -22,9 +22,9 @@ Type \'help\' for instructions
 """
 
 
-class Console(Cmd):
+class Cli(Cmd):
     def __init__(self):
-        super(Console, self).__init__()
+        super(Cli, self).__init__()
 
     def with_docopt(func):
         def execute(*args, **kwargs):
@@ -53,6 +53,39 @@ class Console(Cmd):
         """Usage: create_room <room_name>..."""
         pass
 
+    @with_docopt
+    def do_add_person(self, args):
+        """Usage: add_person <person_firstname> <person_lastname> <FELLOW_or_STAFF> [<wants_accommodation>] """
+        pass
+
+    @with_docopt
+    def do_reallocate_person(self, args):
+        pass
+
+    @with_docopt
+    def do_load_people(self, args):
+        pass
+
+    @with_docopt
+    def do_print_allocations(self, args):
+        pass
+
+    @with_docopt
+    def do_print_unallocated(self, args):
+        pass
+
+    @with_docopt
+    def do_print_room(self, args):
+        pass
+
+    @with_docopt
+    def do_save_state(self, args):
+        pass
+
+    @with_docopt
+    def do_load_state(self, args):
+        pass
+
     def do_version(self, args):
         """Show the version of the program"""
         print("Version {} ".format(str(version)))
@@ -63,6 +96,6 @@ class Console(Cmd):
 
 
 if __name__ == '__main__':
-    console = Console()
-    console.prompt = " Amity $ "
-    console.cmdloop(str_launch)
+    cli = Cli()
+    cli.prompt = " Amity $ "
+    cli.cmdloop(str_launch)
