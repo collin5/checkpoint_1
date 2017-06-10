@@ -1,25 +1,18 @@
 # @Author: collins
 # @Date:   2017-06-09T12:14:44+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-09T18:49:19+03:00
+# @Last modified time: 2017-06-10T13:32:09+03:00
 
-from enum import Enum
-
-
-class RoomType(Enum):
-    OFFICE = 0
-    LIVING = 1
-
-
-class PersonType(Enum):
-    STAFF = 0
-    FELLOW = 1
+from constants import *
 
 
 class Amity(list):
 
     def __init__(self):
         super(Amity, self).__init__()
+
+        self.rooms = []  # rooms in Amity
+        self.people = []  # people in Amity
 
     def create_room(self, *args):
         return 'Ok'

@@ -1,7 +1,7 @@
 # @Author: collins
 # @Date:   2017-06-09T12:15:11+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-09T14:09:10+03:00
+# @Last modified time: 2017-06-10T13:20:25+03:00
 
 
 class Person(object):
