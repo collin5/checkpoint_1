@@ -1,12 +1,12 @@
 # @Author: collins
 # @Date:   2017-06-09T12:14:44+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-12T12:48:49+03:00
+# @Last modified time: 2017-06-12T15:54:37+03:00
 
 from const import *
 from office import Office
 from living_space import LivingSpace
-from modules.security.validation.Validate import *
+from modules.validation.decorators import *
 
 
 class Amity(list):
@@ -32,16 +32,46 @@ class Amity(list):
         # return the type instance for validity check
         return instance[args[0].lower].with_name(None)
 
-    @check_empty_rooms  # check if rooms are empty since we are randomly allocating on adding person
+    @check_empty_offices
     def add_person(self, name, type, accomodation=False):
+
         instance = {
             "fellow": Fellow,
             "staff": Staff
         }
 
+        # first create person
+        new_person = instance[type].with_name(name)
+
+        # Get empty offices
+        empty_offices = filter(lambda office: isinstance(office, Office)
+                               and (len(office.people) < office.capacity), self.rooms)
+
+        # Get empty living rooms
+        empty_living_rooms = filter(lambda room: isinstance(
+            room, LivingSpace) and (len(room.people) < room.capacity), self.rooms)
+
+        # Allocate random office first
+        if(len(empty_offices) < 1):
+            return "No empty offices found in Amity"
+        else:
+            # Randomly allocate office
+            allocate_room(new_person, random.choice(empty_offices))
+
+        # Then living room with choice
+        if(accomodation):
+            if isinstance(new_person, Fellow):
+                if len(empty_living_rooms) < 1:
+                    return "No empty living rooms to allocate this fellow"
+                else:
+                    # Randomly allocate living space
+                    allocate_room(new_person, random.choice(empty_living_rooms))
+            else:
+                return "No living room for non fellows"
+
     @staticmethod
     @validate_allocation
-    def allocated_room(person, room):
+    def allocate_room(person, room):
         # set person attribute according to room instance
         attr = person.allocated_office is isinstance(room, Office) else person.allocated_livingroom
 
