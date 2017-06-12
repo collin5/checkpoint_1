@@ -1,7 +1,7 @@
 # @Author: collins
 # @Date:   2017-06-09T12:14:44+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-12T15:54:37+03:00
+# @Last modified time: 2017-06-12T17:37:50+03:00
 
 from const import *
 from office import Office
@@ -79,7 +79,7 @@ class Amity(list):
             with (attr=room):
                 return True
 
-    def reallocate_person(self, id, room_name):
+    def reallocate_person(self, id, former_room, new_room):
         pass
 
     def load_people(self, file_path=False):
