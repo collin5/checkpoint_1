@@ -1,7 +1,7 @@
 # @Author: collins
 # @Date:   2017-06-12T17:25:10+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-12T17:48:48+03:00
+# @Last modified time: 2017-06-12T17:51:54+03:00
 
 
 from unittest import TestCase
@@ -22,7 +22,7 @@ class TestReallocatePerson(TestCase):
 
         # Now let's reallocate
         self.amity.create_room("office", "Blue")
-        self.amity.reallocate_person(person.id, self.amity.rooms[0], self.amity.rooms[1])
+        self.amity.reallocate_person(person.id, self.amity.rooms[1)
 
         self.assertEqual(person.allocated_office.name, "Blue")
 
@@ -38,6 +38,6 @@ class TestReallocatePerson(TestCase):
 
         # Now reallocate fellow
         self.amity.create_room("living", "Kyampala")
-        self.amity.reallocate_person(person.id, self.amity.room[1], self.amity.rooms[2])
+        self.amity.reallocate_person(person.id, self.amity.rooms[2])
 
         self.assertTrue(person.allocated_livingroom, "Kyampala")
