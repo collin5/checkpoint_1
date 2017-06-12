@@ -1,7 +1,7 @@
 # @Author: collins
 # @Date:   2017-06-09T11:36:19+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-10T17:11:10+03:00
+# @Last modified time: 2017-06-12T16:02:38+03:00
 
 """
 Usage:
@@ -15,7 +15,7 @@ Options:
 from cmd import Cmd
 from docopt import docopt, DocoptExit
 import sys
-from middle_ware import AmityInterface
+from modules.middleware.amityinterface import AmityInterface
 from constants import *
 
 version = 0
