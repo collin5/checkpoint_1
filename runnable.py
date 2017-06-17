@@ -1,7 +1,7 @@
 # @Author: collins
 # @Date:   2017-06-09T11:36:19+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-12T16:02:38+03:00
+# @Last modified time: 2017-06-13T14:07:20+03:00
 
 """
 Usage:
@@ -16,7 +16,7 @@ from cmd import Cmd
 from docopt import docopt, DocoptExit
 import sys
 from modules.middleware.amityinterface import AmityInterface
-from constants import *
+from modules.middleware.const import *
 
 version = 0
 intro = """"
@@ -36,7 +36,7 @@ class Cli(Cmd):
     def with_docopt(func):
 
         def execute(*args, **kwargs):
-            # set args & function name as system arguments for docopt to be able to pick them
+            # set args & function name as system arguments for docopt
             sys.argv = [func.__name__[3:]] + list(args)[1:]
 
             try:

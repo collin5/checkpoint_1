@@ -3,7 +3,7 @@
 # @Last modified by:   collins
 # @Last modified time: 2017-06-12T12:14:50+03:00
 
-from person import Person
+from .person import Person
 
 
 class Fellow(Person):

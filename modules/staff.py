@@ -4,7 +4,7 @@
 # @Last modified time: 2017-06-12T12:17:09+03:00
 
 
-from person import Person
+from .person import Person
 
 
 class Staff(Person):

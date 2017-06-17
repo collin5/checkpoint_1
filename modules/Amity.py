@@ -1,12 +1,12 @@
 # @Author: collins
 # @Date:   2017-06-09T12:14:44+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-12T18:03:20+03:00
+# @Last modified time: 2017-06-13T14:03:13+03:00
 
-from const import *
-from office import Office
-from living_space import LivingSpace
-from modules.validation.decorators import *
+from .middleware.const import *
+from .office import Office
+from .living_space import LivingSpace
+from .validation.decorators import *
 
 
 class Amity(list):
@@ -18,38 +18,40 @@ class Amity(list):
         self.people = []  # people in Amity
 
     def create_room(self, *args):
+        args = args[0][0].split() #get arguments
 
         # map for room types with respective instances
         instance = {
-            "office": Office,
-            "living": LivingSpace
-        }
+                "office": Office,
+                "living": LivingSpace
+                }
 
         for label in args[1:]:
             # create room with room name according to map value
             self.rooms.append(instance[args[0].lower()].with_name(label))
+            print("Room {} successfully created".format(label))
 
         # return the type instance for validity check
         return instance[args[0].lower].with_name(None)
 
-    @check_empty_offices
+    @Validate.check_empty_offices
     def add_person(self, name, type, accomodation=False):
 
         instance = {
-            "fellow": Fellow,
-            "staff": Staff
-        }
+                "fellow": Fellow,
+                "staff": Staff
+                }
 
         # first create person
         new_person = instance[type].with_name(name)
 
         # Get empty offices
-        empty_offices = filter(lambda office: isinstance(office, Office)
-                               and (len(office.people) < office.capacity), self.rooms)
+        empty_offices = list(filter(lambda office: isinstance(office, Office)
+            and (len(office.people) < office.capacity), self.rooms))
 
         # Get empty living rooms
-        empty_living_rooms = filter(lambda room: isinstance(
-            room, LivingSpace) and (len(room.people) < room.capacity), self.rooms)
+        empty_living_rooms = list(filter(lambda room: isinstance(
+            room, LivingSpace) and (len(room.people) < room.capacity), self.rooms))
 
         # Allocate random office first
         if(len(empty_offices) < 1):
@@ -70,14 +72,14 @@ class Amity(list):
                 return "No living room for non fellows"
 
     @staticmethod
-    @validate_allocation
+    @Validate.validate_allocation
     def allocate_room(person, room):
         # set person attribute according to room instance
-        attr = person.allocated_office is isinstance(room, Office) else person.allocated_livingroom
+        attr = person.allocated_office if isinstance(room, Office) else person.allocated_livingroom
 
         if(room.people.append(person)):
-            with (attr=room):
-                return True
+            attr = room
+            return True
 
     def reallocate_person(self, id, new_room):
         # get people with specified id

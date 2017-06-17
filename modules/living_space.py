@@ -3,7 +3,7 @@
 # @Last modified by:   collins
 # @Last modified time: 2017-06-10T18:44:24+03:00
 
-from room import Room
+from .room import Room
 
 MAX_PERSONS = 4  # Living space only allows a maximum of 4 people
 

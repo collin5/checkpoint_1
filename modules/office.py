@@ -4,7 +4,7 @@
 # @Last modified time: 2017-06-10T18:22:55+03:00
 
 
-from room import Room
+from .room import Room
 
 MAX_PERSONS = 6  # office only allows maximum of 6 people
 

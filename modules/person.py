@@ -21,6 +21,3 @@ class Person(object):
     def full_name(self):
         return "{} {}".format(self.first_name, self.last_name)
 
-    @property.setter
-    def full_name(self, person_name):
-        self.first_name, self.last_name = person_name.split(' ')

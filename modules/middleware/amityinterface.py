@@ -4,8 +4,10 @@
 # @Last modified time: 2017-06-09T18:54:09+03:00
 
 from modules.amity import Amity
-from constants import *
+from modules.middleware.const import *
 
+
+amity = Amity()
 
 class AmityInterface(object):
 
@@ -15,5 +17,9 @@ class AmityInterface(object):
 
     def __call__(func, action, *args, **kwargs):
         # map actions with corresponding functions
-        print("working")
-        # TODO: work in progress
+        func = {
+                Action.CREATE_ROOM : amity.create_room(*args),
+            }
+
+        #finally make action call
+        func[action]
