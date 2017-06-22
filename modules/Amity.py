@@ -1,12 +1,14 @@
 # @Author: collins
 # @Date:   2017-06-09T12:14:44+03:00
 # @Last modified by:   collins
-# @Last modified time: 2017-06-13T14:03:13+03:00
+# @Last modified time: 2017-06-18T09:42:31+03:00
 
 from .middleware.const import *
 from .office import Office
 from .living_space import LivingSpace
-from .validation.decorators import *
+from .validation.decorators import Validate
+from .fellow import Fellow
+from .staff import Staff
 
 
 class Amity(list):
@@ -18,7 +20,7 @@ class Amity(list):
         self.people = []  # people in Amity
 
     def create_room(self, *args):
-        args = args[0][0].split() #get arguments
+        args = args[0][0].split()  # get arguments
 
         # map for room types with respective instances
         instance = {
@@ -34,19 +36,19 @@ class Amity(list):
         # return the type instance for validity check
         return instance[args[0].lower].with_name(None)
 
-    @Validate.check_empty_offices
-    def add_person(self, name, type, accomodation=False):
-
+    @Validate.check_empty_offices 
+    def add_person(self, fname, lname, type, accomodation):
+        name = "{} {}".format(fname, lname)
         instance = {
-                "fellow": Fellow,
-                "staff": Staff
-                }
+            "fellow": Fellow,
+            "staff": Staff
+            }
 
         # first create person
         new_person = instance[type].with_name(name)
 
         # Get empty offices
-        empty_offices = list(filter(lambda office: isinstance(office, Office)
+        empty_offices = list(filter(lambda office: isinstance(office, Office) 
             and (len(office.people) < office.capacity), self.rooms))
 
         # Get empty living rooms

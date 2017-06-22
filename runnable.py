@@ -6,6 +6,7 @@
 """
 Usage:
     create_room <room_name>...
+    add_person <person_firstname> <person_lastname> <FELLOW_or_STAFF> [<wants_accommodation>]
 
 Options:
     --version
@@ -16,7 +17,7 @@ from cmd import Cmd
 from docopt import docopt, DocoptExit
 import sys
 from modules.middleware.amityinterface import AmityInterface
-from modules.middleware.const import *
+from modules.middleware.const import Action
 
 version = 0
 intro = """"
@@ -39,9 +40,9 @@ class Cli(Cmd):
             # set args & function name as system arguments for docopt
             sys.argv = [func.__name__[3:]] + list(args)[1:]
 
+            sys.argv = sys.argv if 'create_room' in sys.argv else sys.argv[0].split()+sys.argv[1].split()
             try:
                 doc_Args = docopt(func.__doc__, version=version)
-
                 # Add func name which is previously stripped off
                 # Also remove do_ prefix from function name
                 doc_Args.update({func.__name__[3:]: True})
@@ -50,24 +51,25 @@ class Cli(Cmd):
 
                     Cli.call_amity(Action.CREATE_ROOM, doc_Args['<room_name>'])
 
+                if 'add_person' in doc_Args:
+                    fname, lname = doc_Args['<person_firstname>'], doc_Args['<person_lastname>']
+                    type, accomodation = doc_Args['<FELLOW_or_STAFF>'], True if '[<wants_accomodation>]' in doc_Args else False
+                    Cli.call_amity(Action.ADD_PERSON, fname, lname, type, accomodation)
             except DocoptExit as e:
                 print("Invalid command")
-                return
             except SystemExit as e:
-                return  # Keep Amity instance in case of System Exit
+                return
             finally:
                 return
-
         return execute
 
     @with_docopt
     def do_create_room(self, args):
         """Usage: create_room <room_name>..."""
 
-    @with_docopt
+    @with_docopt 
     def do_add_person(self, args):
         """Usage: add_person <person_firstname> <person_lastname> <FELLOW_or_STAFF> [<wants_accommodation>] """
-
     @with_docopt
     def do_reallocate_person(self, args):
         pass
