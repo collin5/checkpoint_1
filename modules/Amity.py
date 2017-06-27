@@ -27,10 +27,13 @@ class Amity(list):
                 "living": LivingSpace
                 }
 
+        if args[0].lower() not in instance:
+            return 'Room of type {} doesn\'t exist'.format(args[0].lower())
+
         for label in args[1:]:
             # create room with room name according to map value
             self.rooms.append(instance[args[0].lower()].with_name(label))
-            print("Room {} successfully created".format(label))
+            print("{} {} successfully created".format(self.rooms[len(self.rooms) - 1], label))
 
         # return the type instance for validity check
         return instance[args[0]].with_name(None)
@@ -42,6 +45,9 @@ class Amity(list):
             "fellow": Fellow,
             "staff": Staff
             }
+
+        if type.lower() not in instance:
+            return 'Person of type {} doesn\'t exist'.format(type)
 
         # first create person
         new_person = instance[type].with_name(name)
@@ -78,7 +84,7 @@ class Amity(list):
         # set person attribute according to room instance
         attr = person.allocated_office if isinstance(room, Office) else person.allocated_livingroom
         room.people.append(person)
-        return "{} {} successfully allocated to room {} {}".format(person, person.full_name, room, room.name)
+        return "{} {} successfully allocated to {} {}".format(person, person.full_name, room, room.name)
 
     def reallocate_person(self, id, new_room):
         # get people with specified id

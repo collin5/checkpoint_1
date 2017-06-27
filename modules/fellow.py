@@ -9,7 +9,7 @@ from .person import Person
 class Fellow(Person):
 
     def __init__(self, name, accomodation=False):
-        super(Fellow, self).__init__(name)
+        super(Fellow, self).__init__(name, accomodation)
         # No rooms allocated to fellow on instantiation
         self.allocated_office, self.allocated_livingroom = None, None
 

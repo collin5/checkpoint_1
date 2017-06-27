@@ -5,7 +5,7 @@
 
 from modules.fellow import Fellow
 from modules.staff import Staff
-
+from modules.office import Office
 
 class Validate(object):
 
