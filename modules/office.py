@@ -17,3 +17,6 @@ class Office(Room):
     @classmethod
     def with_name(ctx, name):
         return ctx(name)
+
+    def __str__(self):
+        return 'office'

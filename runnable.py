@@ -57,10 +57,6 @@ class Cli(Cmd):
                     Cli.call_amity(Action.ADD_PERSON, fname, lname, type, accomodation)
             except DocoptExit as e:
                 print("Invalid command")
-            except SystemExit as e:
-                return
-            finally:
-                return
         return execute
 
     @with_docopt

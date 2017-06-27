@@ -35,8 +35,11 @@ class Validate(object):
         def verify(*args, **kwargs):
             ctx, type = args[0], args[1]
 
-            empty_offices = filter(lambda room: isinstance(room, Office)
-                    and (len(room.people) < room.capacity), ctx.rooms)
-            return func(*args, **kwargs)
+            empty_offices = list(filter(lambda room: isinstance(room, Office)
+                    and (len(room.people) < room.capacity), ctx.rooms))
+            if len(empty_offices) < 1:
+                return "There are no empty offices in Amity"
+            else:
+                return func(*args, **kwargs)
 
         return verify

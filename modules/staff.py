@@ -10,10 +10,13 @@ from .person import Person
 class Staff(Person):
 
     def __init__(self, name):
-        super(Person, self).__init__(person_name)
+        super(Person, self).__init__(name)
 
         self.allocated_office = None  # Person initially allocated to no office
 
     @classmethod
     def with_name(ctx, name):
         return Staff(name)
+
+    def __str__(self):
+        return 'staff'

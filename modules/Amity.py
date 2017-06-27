@@ -9,7 +9,7 @@ from .living_space import LivingSpace
 from .validation.decorators import Validate
 from .fellow import Fellow
 from .staff import Staff
-
+import random
 
 class Amity(list):
 
@@ -17,7 +17,6 @@ class Amity(list):
         super(Amity, self).__init__()
 
         self.rooms = []  # rooms in Amity
-        self.people = []  # people in Amity
 
     def create_room(self, *args):
         args = args[0][0].split()  # get arguments
@@ -34,7 +33,7 @@ class Amity(list):
             print("Room {} successfully created".format(label))
 
         # return the type instance for validity check
-        return instance[args[0].lower].with_name(None)
+        return instance[args[0]].with_name(None)
 
     @Validate.check_empty_offices 
     def add_person(self, fname, lname, type, accomodation):
@@ -60,7 +59,7 @@ class Amity(list):
             return "No empty offices found in Amity"
         else:
             # Randomly allocate office
-            allocate_room(new_person, random.choice(empty_offices))
+            print(self.allocate_room(new_person, random.choice(empty_offices)))
 
         # Then living room with choice
         if(accomodation):
@@ -69,7 +68,7 @@ class Amity(list):
                     return "No empty living rooms to allocate this fellow"
                 else:
                     # Randomly allocate living space
-                    allocate_room(new_person, random.choice(empty_living_rooms))
+                    print(self.allocate_room(new_person, random.choice(empty_living_rooms)))
             else:
                 return "No living room for non fellows"
 
@@ -78,10 +77,8 @@ class Amity(list):
     def allocate_room(person, room):
         # set person attribute according to room instance
         attr = person.allocated_office if isinstance(room, Office) else person.allocated_livingroom
-
-        if(room.people.append(person)):
-            attr = room
-            return True
+        room.people.append(person)
+        return "{} {} successfully allocated to room {} {}".format(person, person.full_name, room, room.name)
 
     def reallocate_person(self, id, new_room):
         # get people with specified id

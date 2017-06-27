@@ -16,3 +16,6 @@ class LivingSpace(Room):
     @classmethod
     def with_name(ctx, name):
         return ctx(name)
+
+    def __str_(self):
+        return 'living space'

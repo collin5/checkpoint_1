@@ -7,7 +7,7 @@
 class Person(object):
 
     def __init__(self, person_name, accomodation):
-        super(Person, self).__init()
+        super(Person, self).__init__()
 
         self.id = 0  # sets initial person id to 0
         self.first_name, self.last_name = person_name.split(' ')

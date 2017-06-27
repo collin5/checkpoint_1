@@ -17,10 +17,16 @@ class AmityInterface(object):
 
     def __call__(func, action, *args, **kwargs):
         # map actions with corresponding functions
+        
+        msg = None
 
         if action is Action.CREATE_ROOM:
-            amity.create_room(*args)
+            msg = amity.create_room(*args)
 
         if action is Action.ADD_PERSON:
-            amity.add_person(*args)
+            msg = amity.add_person(*args)
+
+        # std out if message retuned by action
+        if isinstance(msg, str):
+            print(msg)
 
