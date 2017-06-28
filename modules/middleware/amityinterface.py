@@ -26,6 +26,9 @@ class AmityInterface(object):
         if action is Action.ADD_PERSON:
             msg = amity.add_person(*args)
 
+        if action is Action.REALLOCATE_PERSON:
+            msg =amity.reallocate_person(*args)
+
         # std out if message retuned by action
         if isinstance(msg, str):
             print(msg)

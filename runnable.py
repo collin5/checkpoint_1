@@ -70,7 +70,7 @@ class Cli(Cmd):
         """Usage: add_person <person_firstname> <person_lastname> <FELLOW_or_STAFF> [<wants_accommodation>] """
     @with_docopt
     def do_reallocate_person(self, args):
-        """Usage: reallocate_person <person_identifier> <new_room_name>"""
+        """Usage: reallocate_person <person_identifier> <new_roomname>"""
 
     @with_docopt
     def do_load_people(self, args):
