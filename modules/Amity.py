@@ -13,6 +13,7 @@ from .myformatter import MyFormatter
 import random
 from functools import reduce
 from .spinner import Spinner
+import os
 
 
 class Amity(list):
@@ -84,7 +85,7 @@ class Amity(list):
             print("{} {} was successfully created".format(
                 new_person, new_person.full_name.upper()))
             # Randomly allocate office
-            print("\n" + self.allocate_room(new_person,
+            print(self.allocate_room(new_person,
                                             random.choice(empty_offices)) + "\n")
 
         # Then living room with choice
@@ -130,6 +131,8 @@ class Amity(list):
     def load_people(self, file_path=False):
         Spinner.show()
         if file_path:
+            if not os.path.exists(file_path):
+                return "File path {} doesn't exist, please try again".format(file_path)
             with open(file_path, 'r') as f:
                 rows = f.read().split('\n')
                 for row in rows:
@@ -184,7 +187,7 @@ class Amity(list):
                              == room_name.lower(), self.rooms))
         if len(search) < 1:
             return "Room with name {} not found in amity, please check spelling and try again".format(room_name)
-        return MyFormatter.room_format(search)
+        return MyFormatter.room_format(search[0])
 
     def sate_state(self, db=False):
         Spinner.show()
