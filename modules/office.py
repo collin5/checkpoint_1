@@ -19,4 +19,4 @@ class Office(Room):
         return ctx(name)
 
     def __str__(self):
-        return 'office'
+        return 'Office'

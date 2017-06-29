@@ -27,8 +27,20 @@ class AmityInterface(object):
             msg = amity.add_person(*args)
 
         if action is Action.REALLOCATE_PERSON:
-            msg =amity.reallocate_person(*args)
+            msg = amity.reallocate_person(*args)
+
+        if action is Action.LOAD_PEOPLE:
+            msg = amity.load_people(*args)
+
+        if action is Action.PRINT_ALLOCATIONS:
+            msg = amity.print_allocations(*args)
+
+        if action is Action.PRINT_UNALLOCATED:
+            msg = amity.print_unallocated(*args)
+
+        if action is Action.PRINT_ROOM:
+            msg = amity.print_room(*args)
 
         # std out if message retuned by action
         if isinstance(msg, str):
-            print(msg)
+            print("\n"+msg+"\n")

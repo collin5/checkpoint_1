@@ -18,4 +18,4 @@ class Staff(Person):
         return Staff(name, accomodation)
 
     def __str__(self):
-        return 'staff'
+        return 'Staff'

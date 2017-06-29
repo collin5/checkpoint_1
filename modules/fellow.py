@@ -18,4 +18,4 @@ class Fellow(Person):
         return Fellow(name, accomodation)
 
     def __str__(self):
-        return 'fellow'
+        return 'Fellow'
