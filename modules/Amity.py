@@ -46,9 +46,8 @@ class Amity(list):
             else:
                 # create room with room name according to map value
                 self.rooms.append(instance[args[0].lower()].with_name(label))
+                self.rooms[len(self.rooms)-1].people = list()
 
-                # create room with room name according to map value
-                self.rooms.append(instance[args[0].lower()].with_name(label))
                 print("\n{} {} successfully created\n".format(
                     self.rooms[len(self.rooms) - 1], label))
 
@@ -95,14 +94,13 @@ class Amity(list):
                     return "No empty living rooms to allocate this fellow"
                 else:
                     # Randomly allocate living space
-                    print(self.allocate_room(new_person,
+                    print("\b"+self.allocate_room(new_person,
                                              random.choice(empty_living_rooms)))
             else:
                 return "No living room for non fellows"
 
-    @staticmethod
     @Validate.validate_allocation
-    def allocate_room(person, room):
+    def allocate_room(self, person, room):
         # set person attribute according to room instance
         if isinstance(room, Office):
             person.allocated_office = room
@@ -124,7 +122,7 @@ class Amity(list):
 
         # Return if room not found
         if(len(next_room_assoc) < 1):
-            allocate_room(person, next_room_assoc[0])
+            self.allocate_room(person, next_room_assoc[0])
         else:
             return "Room not found"
 
@@ -187,7 +185,7 @@ class Amity(list):
                              == room_name.lower(), self.rooms))
         if len(search) < 1:
             return "Room with name {} not found in amity, please check spelling and try again".format(room_name)
-        return MyFormatter.room_format(search[0])
+        return MyFormatter.room_format(search)
 
     def sate_state(self, db=False):
         Spinner.show()

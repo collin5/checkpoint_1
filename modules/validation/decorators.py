@@ -15,7 +15,7 @@ class Validate(object):
     @staticmethod
     def validate_allocation(func):
         def verify(*args, **kwargs):
-            person, room = args[0], args[1]
+            person, room = args[1], args[2]
              #first only staff are allowed to be allocated living space
             if isinstance(person, Fellow) and isinstance(person, Staff):
                 return "Staff cannot be allocated living room"
