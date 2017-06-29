@@ -12,6 +12,7 @@ from .staff import Staff
 from .myformatter import MyFormatter
 import random
 from functools import reduce
+from .spinner import Spinner
 
 
 class Amity(list):
@@ -22,6 +23,7 @@ class Amity(list):
         self.rooms = []  # rooms in Amity
 
     def create_room(self, *args):
+        Spinner.show()
         args = args[0][0].split()  # get arguments
 
         # map for room types with respective instances
@@ -34,10 +36,12 @@ class Amity(list):
             return 'Room of type {} doesn\'t exist'.format(args[0].lower())
 
         for label in args[1:]:
-            #check for duplicates
-            similar = list(filter(lambda room : room.name.lower() == label.lower(), self.rooms))
+            # check for duplicates
+            similar = list(filter(lambda room: room.name.lower()
+                                  == label.lower(), self.rooms))
             if len(similar) > 0:
-                print("\nRoom called {} already exists, please try a different room name".format(label))
+                print(
+                    "\nRoom called {} already exists, please try a different room name".format(label))
             else:
                 # create room with room name according to map value
                 self.rooms.append(instance[args[0].lower()].with_name(label))
@@ -52,6 +56,7 @@ class Amity(list):
 
     @Validate.check_empty_offices
     def add_person(self, fname, lname, type, accomodation=False):
+        Spinner.show()
         name = "{} {}".format(fname, lname)
         instance = {
             "fellow": Fellow,
@@ -123,6 +128,7 @@ class Amity(list):
             return "Room not found"
 
     def load_people(self, file_path=False):
+        Spinner.show()
         if file_path:
             with open(file_path, 'r') as f:
                 rows = f.read().split('\n')
@@ -133,6 +139,7 @@ class Amity(list):
             return "Oops, file path not found !"
 
     def print_allocations(self, output_path=False):
+        Spinner.show()
         # get rooms with people allocated to them
         search = list(filter(lambda room: len(room.people) > 0, self.rooms))
         if len(search) < 1:
@@ -150,6 +157,7 @@ class Amity(list):
             return res
 
     def print_unallocated(self, output_path=False):
+        Spinner.show()
         if len(self.rooms) < 1:
             return "No rooms present in Amity yet, please try adding some rooms"
 
@@ -171,6 +179,7 @@ class Amity(list):
             return res
 
     def print_room(self, room_name):
+        Spinner.show()
         search = list(filter(lambda room: room.name.lower()
                              == room_name.lower(), self.rooms))
         if len(search) < 1:
@@ -178,7 +187,9 @@ class Amity(list):
         return MyFormatter.room_format(search)
 
     def sate_state(self, db=False):
+        Spinner.show()
         pass
 
     def load_state(self, db=False):
+        Spinner.show()
         pass
