@@ -84,6 +84,12 @@ class Cli(Cmd):
                 if 'print_room' in doc_Args:
                     Cli.call_amity(Action.PRINT_ROOM, doc_Args['<room_name>'])
 
+                if 'save_state' in doc_Args:
+                    Cli.call_amity(Action.SAVE_STATE, doc_Args['<db_name>'])
+
+                if 'load_state' in doc_Args:
+                    Cli.call_amity(Action.LOAD_STATE, doc_Args['<state_name>'])
+
             except DocoptExit as e:
                 print("Invalid command")
         return execute
@@ -117,11 +123,11 @@ class Cli(Cmd):
 
     @with_docopt
     def do_save_state(self, args):
-        pass
+        """Usage: save_state [-db] [<db_name>]"""
 
     @with_docopt
     def do_load_state(self, args):
-        pass
+        """Usage: load_state <state_name>"""
 
     def do_version(self, args):
         """Show the version of the program"""

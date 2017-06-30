@@ -16,27 +16,27 @@ class AppStateTestCase(TestCase):
 
     def test_save_state_successfully(self):
         self.amity.create_room(['office demo'])
-        self.save_state()
-        self.assertTrue(os.path.exists("default_state.db"))
+        self.amity.save_state()
+        self.assertTrue(os.path.exists("recent.db"))
         # house cleaning
         os.system('rm default_state.db')
 
 
     def test_save_state_with_specific_db_name(self):
         self.amity.create_room(['office demo'])
-        self.save_state('my_state.db')
+        self.amity.save_state('my_state.db')
         self.assertTrue(os.path.exists("my_state.db"))
         os.system("rm my_state.db")
 
     def test_load_state(self):
         self.amity.save_state("empty_state.db")
-        msg = self.load_state("empty_state.db")
-        self.assertEqual(msg.lower(), "state loaded successfully")
+        msg = self.amity.load_state("empty_state.db")
+        self.assertEqual(msg.lower(), "state empty_state.db loaded successfully")
 
     def test_load_state_no_params(self):
-        msg = self.load_state()
-        self.assertEqual(msg.lower(), "please specify target state")
+        msg = self.amity.load_state()
+        self.assertEqual(msg.lower(), "please specify target state, use 'recent.db' to get the recently saved")
 
     def test_load_state_invalid_path(self):
-        msg = self.load_state("lsksksksks.db")
-        self.assertEqual(msg.lower(), "target state not found, please check spelling")
+        msg = self.amity.load_state("lsksksksks.db")
+        self.assertEqual(msg.lower(), "target state lsksksksks.db not found, please check spelling")

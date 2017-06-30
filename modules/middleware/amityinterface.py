@@ -41,6 +41,12 @@ class AmityInterface(object):
         if action is Action.PRINT_ROOM:
             msg = amity.print_room(*args)
 
+        if action is Action.SAVE_STATE:
+            msg = amity.save_state(*args)
+
+        if action is Action.LOAD_STATE:
+            msg = amity.load_state(*args)
+
         # std out if message retuned by action
         if isinstance(msg, str):
             print("\n"+msg+"\n")

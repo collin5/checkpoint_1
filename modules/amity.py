@@ -14,6 +14,7 @@ import random
 from functools import reduce
 from .spinner import Spinner
 import os
+import pickle
 
 
 class Amity(list):
@@ -216,11 +217,23 @@ class Amity(list):
             return "Room with name {} not found in amity, please check spelling and try again".format(room_name)
         return MyFormatter.room_format(search)
 
-    def sate_state(self, db=False):
+    def save_state(self, db=False):
         Spinner.show()
-        pass
+        name = db if db else "recent.db"
+        with open(name,'wb+') as f:
+            f.write(pickle.dumps(self))
+        return "State saved successfuly as {}".format(name)
 
     def load_state(self, db=False):
         Spinner.show()
-        pass
+        if not db:
+            return "Please specify target state, use 'recent.db' to get the recently saved"
+
+        if not os.path.exists(db):
+            return "Target state {} not found, please check spelling".format(db)
+        with open(db,'rb') as f:
+            state = pickle.loads(f.read())
+            self.rooms = state.rooms
+            self.people = state.people
+        return "State {} loaded successfully".format(db)
 
