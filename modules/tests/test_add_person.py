@@ -52,3 +52,12 @@ class TestAddPerson(TestCase):
         self.assertTrue(isinstance(person_3, Staff))
         self.assertTrue(isinstance(person_4, Fellow))
 
+    def test_add_person_invalid_type(self):
+        msg = self.amity.add_person("Collins", "A", "loosososo")
+        self.assertEqual(msg.lower(), "person of type loosososo doesn\'t exist")
+
+    def test_add_person_without_room_in_amity(self):
+        self.amity.rooms[:] = []
+        msg = self.amity.add_person("Collins","A","fellow")
+        self.assertEqual(msg.lower(), "there are no empty offices in amity")
+

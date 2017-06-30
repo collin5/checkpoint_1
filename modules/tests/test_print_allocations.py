@@ -2,6 +2,8 @@
 # Date: 28.06.2017
 # Last Modified: 28.06.2017
 
+import os
+os.sys.path.append('.')
 from unittest import TestCase
 from modules.amity import Amity
 
@@ -33,3 +35,13 @@ class PrintAllocationsTestCase(TestCase):
         stdout = self.amity.print_allocations()
         self.assertTrue('catherines' in stdout.lower())
         self.assertTrue('collins' in stdout.lower())
+
+
+    def test_print_allocations_to_file(self):
+        self.amity.create_room(['office ruby'])
+        self.amity.add_person('collins', 'a', 'fellow', True)
+        msg = self.amity.print_allocations("test_allocations.txt")
+        self.assertEqual(msg.lower(),"allocations successfully written to file test_allocations.txt." )
+        #do clean up
+        os.system('rm test_allocations.txt')
+
