@@ -22,6 +22,7 @@ class Amity(list):
         super(Amity, self).__init__()
 
         self.rooms = []  # rooms in Amity
+        self.people = []
 
     def create_room(self, *args):
         Spinner.show()
@@ -71,6 +72,7 @@ class Amity(list):
 
         # first create person
         new_person = instance[type.lower()].with_name(name)
+        self.people.append(new_person)
 
         # Get empty offices
         empty_offices = list(filter(lambda office: isinstance(office, Office)
@@ -219,3 +221,4 @@ class Amity(list):
     def load_state(self, db=False):
         Spinner.show()
         pass
+
