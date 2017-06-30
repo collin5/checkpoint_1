@@ -4,62 +4,69 @@
 # @Last modified time: 2017-06-10T16:51:17+03:00
 
 
+import os
+os.sys.path.append('.')
 from unittest import TestCase
 from modules.amity import Amity
 from modules.office import Office
 from modules.living_space import LivingSpace
-from constants import *
+from modules.middleware.const import *
 
 
 class TestCreateRoom(TestCase):
 
-    def setUp():
+    def setUp(self):
         self.amity = Amity()
 
-    def test_create_room_succesfully():
+    def test_create_room_succesfully(self):
         initial_room_count = len(self.amity.rooms)
-        self.amity.create_room("Mombasa")
+        self.amity.create_room(["office Mombasa"])
         new_room_count = len(self.amity.rooms)
 
         self.assertEqual(new_room_count - initial_room_count, 1)
 
-    def test_create_rooms_successfully():
+    def test_create_rooms_successfully(self):
         initial_room_count = len(self.amity.rooms)
-        self.amity.create_room("Mombasa", "Lagos")
+        self.amity.create_room(["office Mombasa Lagos"])
         new_room_count = len(self.amity.rooms)
 
         self.assertEqual(new_room_count - initial_room_count, 2)
 
-    def test_create_rooms_successfully_2():
+    def test_create_rooms_successfully_2(self):
         initial_room_count = len(self.amity.rooms)
-        self.amity.create_room("Kampala", "Lagos", "NewYork", "Nairobi")
+        self.amity.create_room(["office Kampala Lagos NewYork Nairobi"])
         new_room_count = len(self.amity.rooms)
 
         self.assertEqual(new_room_count - initial_room_count, 4)
 
-    def test_default_room_office():
-        # Room type must be office if type not specified
-        self.amity.rooms[:] = []  # first remove all rooms from Amity
-        self.amity.create_room("MaleWing")
 
-        self.assertTrue(isinstance(amity.rooms[0], Office))
-
-    def test_create_room_with_type_office():
+    def test_create_room_with_type_office(self):
         self.amity.rooms[:] = []
-        self.amity.create_room("Office", "Lagos")
+        self.amity.create_room(["Office Lagos"])
 
-        self.assertTrue(isinstance(amity.rooms[0], Office))
+        self.assertTrue(isinstance(self.amity.rooms[0], Office))
 
-    def test_create_room_with_type_livingspace():
+    def test_create_room_with_type_livingspace(self):
         self.amity.rooms[:] = []
-        self.amity.create_room("Living", "Catherines")
+        self.amity.create_room(["Living Catherines"])
 
-        self.assertTrue(isinstance(amity.rooms[0], LivingSpace))
+        self.assertTrue(isinstance(self.amity.rooms[0], LivingSpace))
 
-    def test_create_rooms_multiple_types():
+    def test_create_rooms_multiple_types(self):
         self.amity.rooms[:] = []
-        self.amity.create_room("Office", "Dojo")
-        self.amity.create_room("Living", "Catherines")
+        self.amity.create_room(["Office Dojo"])
+        self.amity.create_room(["Living Catherines"])
 
-        self.assertTrue(self.amity.rooms[0], Office)
-        self.assertTrue(self.amity.rooms[1], LivingSpace)
+        self.assertTrue(isinstance(self.amity.rooms[0], Office))
+        self.assertTrue(isinstance(self.amity.rooms[1], LivingSpace))
+
+
+    def test_create_room_invalid_type(self):
+        err = self.amity.create_room(["lorem ipsum"])
+        self.assertEqual(err.lower(), "room of type lorem doesn\'t exist")
+
+    def test_create_room_duplicate(self):
+        self.amity.rooms[:] = []
+        self.amity.create_room(["office ipsum"])
+        err = self.amity.create_room(["office ipsum"])
+        self.assertEqual(len(self.amity.rooms), 1)

@@ -53,7 +53,7 @@ class Amity(list):
                     self.rooms[len(self.rooms) - 1], label))
 
         # return the type instance for validity check
-        return instance[args[0]].with_name(None)
+        return instance[args[0].lower()].with_name(None)
 
     @Validate.check_empty_offices
     def add_person(self, fname=False, lname=False, type=False, accomodation=False):
@@ -103,6 +103,8 @@ class Amity(list):
                                                     random.choice(empty_living_rooms)))
             else:
                 return "No living room for non fellows"
+
+        return new_person
 
     @Validate.validate_allocation
     def allocate_room(self, person, room):

@@ -10,34 +10,34 @@ from modules.amity import Amity
 
 class TestReallocatePerson(TestCase):
 
-    def setUp():
+    def setUp(self):
         self.amity = Amity()
 
-    def reallocate_person_office_successfully():
-        self.amity.create_room("office", "Ruby")
+    def test_reallocate_person_office_successfully(self):
+        self.amity.create_room(["office Ruby"])
 
         # Person will be automatically allocated on instantiation
-        self.add_person("Mbithe Nzomo", "fellow")
+        self.amity.add_person("Mbithe"," Nzomo", "fellow")
         person = self.amity.rooms[0].people[0]
 
         # Now let's reallocate
-        self.amity.create_room("office", "Blue")
-        self.amity.reallocate_person(person.id, self.amity.rooms[1)
+        self.amity.create_room(["office Blue"])
+        self.amity.reallocate_person(person.id, self.amity.rooms[1].name)
 
         self.assertEqual(person.allocated_office.name, "Blue")
 
-    def rallocate_person_living_room_successfully():
+    def test_rallocate_person_living_room_successfully(self):
         # office needed for every person in amity
-        self.amity.create_room("office", "Purple")
+        self.amity.create_room(["office Purple"])
 
-        self.amity.create_room("living", "Catherines")
+        self.amity.create_room(["living Catherines"])
 
         # This will give fellow living room
-        self.add_person("Collins Abitekaniza", "fellow", True)
-        fellow = self.amity.rooms[1].people[0]
+        self.amity.add_person("Collins", "Abitekaniza", "fellow", True)
+        fellow = self.amity.rooms[0].people[0]
 
         # Now reallocate fellow
-        self.amity.create_room("living", "Kyampala")
-        self.amity.reallocate_person(person.id, self.amity.rooms[2])
+        self.amity.create_room(["living Kyampala"])
+        self.amity.reallocate_person(fellow.id, self.amity.rooms[2].name)
 
-        self.assertTrue(person.allocated_livingroom, "Kyampala")
+        self.assertTrue(fellow.allocated_livingroom, "Kyampala")
