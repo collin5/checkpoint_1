@@ -25,6 +25,8 @@ from docopt import docopt, DocoptExit
 import sys
 from modules.middleware.amityinterface import AmityInterface
 from modules.middleware.const import Action
+from pyfiglet import figlet_format
+from termcolor import colored, cprint
 
 version = 0
 intro = """"
@@ -145,6 +147,8 @@ class Cli(Cmd):
 
 
 if __name__ == '__main__':
+    cprint(figlet_format("^_^ Amity", font="starwars"),
+               'yellow', 'on_red', attrs=['bold'])
     cli = Cli()
     cli.prompt = " Amity $ "
     cli.cmdloop(intro)
