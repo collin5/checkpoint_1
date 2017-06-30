@@ -16,7 +16,7 @@ class Spinner(object):
     def show(msg = None):
         spinner = itertools.cycle(['-', '/', '|', '\\'])
 
-        for i in range(1):
+        for i in range(10):
             sys.stdout.write(next(spinner))
             sys.stdout.flush()
             time.sleep(0.1)
