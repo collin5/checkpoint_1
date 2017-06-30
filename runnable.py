@@ -92,6 +92,12 @@ class Cli(Cmd):
 
             except DocoptExit as e:
                 print("Invalid command")
+            
+            except SystemExit as e:
+                return
+
+        execute.__doc__ = func.__doc__
+        
         return execute
 
     @with_docopt
