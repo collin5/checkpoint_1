@@ -18,11 +18,11 @@ class MyFormatter(object):
                 people_str = ""
                 if len(room.people) > 0:
                     for person in room.people:
-                        people_str += ", "+person.full_name.upper()
+                        people_str += ", [ID - {} ] {} ".format(person.id, person.full_name.upper())
                 else:
-                    people_str = "\tEMPTY"
+                    people_str = " \tEMPTY"
 
-                res += people_str
+                res += people_str[1:] #strip off first comma
 
         else:
             res = "NO ROOMS FOUND IN AMITY"

@@ -61,7 +61,7 @@ class Cli(Cmd):
 
                 if 'add_person' in doc_Args:
                     fname, lname = doc_Args['<person_firstname>'], doc_Args['<person_lastname>']
-                    type, accomodation = doc_Args['<FELLOW_or_STAFF>'], True if '<wants_accommodation>' in doc_Args and doc_Args['<wants_accommodation>'].upper(
+                    type, accomodation = doc_Args['<FELLOW_or_STAFF>'], True if '<wants_accommodation>' in doc_Args and doc_Args['<wants_accommodation>'] is not None  and doc_Args['<wants_accommodation>'].upper(
                     ) == 'Y' else False
                     Cli.call_amity(Action.ADD_PERSON, fname,
                                    lname, type, accomodation)

@@ -46,7 +46,7 @@ class Amity(list):
             else:
                 # create room with room name according to map value
                 self.rooms.append(instance[args[0].lower()].with_name(label))
-                self.rooms[len(self.rooms)-1].people = list()
+                self.rooms[len(self.rooms) - 1].people = list()
 
                 print("\n{} {} successfully created\n".format(
                     self.rooms[len(self.rooms) - 1], label))
@@ -55,7 +55,10 @@ class Amity(list):
         return instance[args[0]].with_name(None)
 
     @Validate.check_empty_offices
-    def add_person(self, fname, lname, type, accomodation=False):
+    def add_person(self, fname=False, lname=False, type=False, accomodation=False):
+        # in case of trailing white space, do nothing
+        if not fname or not lname or not type:
+            return
         Spinner.show()
         name = "{} {}".format(fname, lname)
         instance = {
@@ -85,7 +88,7 @@ class Amity(list):
                 new_person, new_person.full_name.upper()))
             # Randomly allocate office
             print(self.allocate_room(new_person,
-                                            random.choice(empty_offices)) + "\n")
+                                     random.choice(empty_offices)) + "\n")
 
         # Then living room with choice
         if(accomodation):
@@ -94,8 +97,8 @@ class Amity(list):
                     return "No empty living rooms to allocate this fellow"
                 else:
                     # Randomly allocate living space
-                    print("\b"+self.allocate_room(new_person,
-                                             random.choice(empty_living_rooms)))
+                    print("\b" + self.allocate_room(new_person,
+                                                    random.choice(empty_living_rooms)))
             else:
                 return "No living room for non fellows"
 
@@ -112,19 +115,41 @@ class Amity(list):
         return "{} {} successfully allocated to {} {}".format(person, person.full_name.upper(), room, room.name)
 
     def reallocate_person(self, id, new_room):
+        # first reduce all people in all rooms, convert to generator to save memory
+        gathering = (reduce(lambda x, y: x.people + y.people, self.rooms))
         # get people with specified id
-        person_assoc = list(filter(lambda obj: obj.id is id, self.people))
+        id = int(id)
+        person_assoc = list(filter(lambda obj: obj.id == id, gathering))
         if len(person_assoc) < 1:
             return "Person with identiifer {} not found".format(id)
         person = person_assoc[0]  # person is the first object
-
-        next_room_assoc = filter(lambda obj: obj.name is new_room, self.rooms)
+        
+        next_room_assoc = list(filter(lambda obj: obj.name.lower() == new_room.lower(), self.rooms))
+        next_room = next_room_assoc[0]
 
         # Return if room not found
-        if(len(next_room_assoc) < 1):
-            self.allocate_room(person, next_room_assoc[0])
+        if(len(next_room_assoc) > 0):
+            #check if instance and allocate with same type
+            if isinstance(next_room_assoc[0], Office):
+                prev_room_assoc = list(filter(lambda obj: obj.name == person.allocated_office.name, self.rooms))
+                if len(prev_room_assoc) < 1:
+                    return "Previous office for {} {} not found".format(person, person.full_name.upper())
+                #get index of person in previous room
+                index = [i for i, x in enumerate(prev_room_assoc[0].people) if x.id == person.id][0]
+                del prev_room_assoc[0].people[index]
+                person.allocated_office = None
+            else:
+                prev_room_assoc = list(filter(lambda obj: obj.name == person.allocated_livingroom.name, self.rooms))
+                if len(prev_room_assoc) < 1:
+                    return "Previous Living room for {} {} not found".format(person, person.full_name.upper())
+                #get index of person in previous room
+                index = [i for i, x in enumerate(prev_room_assoc[0].people) if x.id == person.id][0]
+                del prev_room_assoc[0].people[index]
+                person.allocated_livingroom = None
+                
+            return (self.allocate_room(person, next_room))
         else:
-            return "Room not found"
+            return "Room called {} not found".format(new_room)
 
     def load_people(self, file_path=False):
         Spinner.show()
