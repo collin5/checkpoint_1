@@ -1,7 +1,6 @@
 # Overview
 [![Build Status](https://travis-ci.org/collin5/checkpoint_1.svg?branch=master)](https://travis-ci.org/collin5/checkpoint_1)
 [![Coverage Status](https://coveralls.io/repos/github/collin5/checkpoint_1/badge.svg?branch=master)](https://coveralls.io/github/collin5/checkpoint_1?branch=master)
-License: MIT
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Amity is random room allocator to Staff members and fellows.
