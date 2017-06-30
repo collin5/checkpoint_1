@@ -3,13 +3,15 @@
 # @Last modified by:   collins
 # @Last modified time: 2017-06-10T13:20:25+03:00
 
+from modules.middleware.fileiointerface import FileIO
+
 
 class Person(object):
 
     def __init__(self, person_name, accomodation):
-        super(Person, self).__init()
+        super(Person, self).__init__()
 
-        self.id = 0  # sets initial person id to 0
+        self.id = Person.get_ID()  # get person ID autoincrement
         self.first_name, self.last_name = person_name.split(' ')
         self.accomodation = accomodation
 
@@ -21,6 +23,7 @@ class Person(object):
     def full_name(self):
         return "{} {}".format(self.first_name, self.last_name)
 
-    @property.setter
-    def full_name(self, person_name):
-        self.first_name, self.last_name = person_name.split(' ')
+    @staticmethod
+    @FileIO.generate_pk_with_file
+    def get_ID(*args, **kwargs):
+        return args[0]['PK']
