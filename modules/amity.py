@@ -56,7 +56,6 @@ class Amity(list):
         # return the type instance for validity check
         return instance[args[0].lower()].with_name(None)
 
-    @Validate.check_empty_offices
     def add_person(self, fname=False, lname=False, type=False, accomodation=False):
         # in case of trailing white space, do nothing
         if not fname or not lname or not type:
@@ -75,6 +74,9 @@ class Amity(list):
         new_person = instance[type.lower()].with_name(name)
         self.people.append(new_person)
 
+        print("{} {} was successfully created".format(
+            new_person, new_person.full_name.upper()))
+
         # Get empty offices
         empty_offices = list(filter(lambda office: isinstance(office, Office)
                                     and (len(office.people) < office.capacity), self.rooms))
@@ -82,13 +84,9 @@ class Amity(list):
         # Get empty living rooms
         empty_living_rooms = list(filter(lambda room: isinstance(
             room, LivingSpace) and (len(room.people) < room.capacity), self.rooms))
-
-        # Allocate random office first
         if(len(empty_offices) < 1):
             return "No empty offices found in Amity"
         else:
-            print("{} {} was successfully created".format(
-                new_person, new_person.full_name.upper()))
             # Randomly allocate office
             print(self.allocate_room(new_person,
                                      random.choice(empty_offices)) + "\n")
@@ -128,30 +126,35 @@ class Amity(list):
         if len(person_assoc) < 1:
             return "Person with identiifer {} not found".format(id)
         person = person_assoc[0]  # person is the first object
-        
-        next_room_assoc = list(filter(lambda obj: obj.name.lower() == new_room.lower(), self.rooms))
+
+        next_room_assoc = list(
+            filter(lambda obj: obj.name.lower() == new_room.lower(), self.rooms))
         next_room = next_room_assoc[0]
 
         # Return if room not found
         if(len(next_room_assoc) > 0):
-            #check if instance and allocate with same type
+            # check if instance and allocate with same type
             if isinstance(next_room_assoc[0], Office):
-                prev_room_assoc = list(filter(lambda obj: obj.name == person.allocated_office.name, self.rooms))
+                prev_room_assoc = list(
+                    filter(lambda obj: obj.name == person.allocated_office.name, self.rooms))
                 if len(prev_room_assoc) < 1:
                     return "Previous office for {} {} not found".format(person, person.full_name.upper())
-                #get index of person in previous room
-                index = [i for i, x in enumerate(prev_room_assoc[0].people) if x.id == person.id][0]
+                # get index of person in previous room
+                index = [i for i, x in enumerate(
+                    prev_room_assoc[0].people) if x.id == person.id][0]
                 del prev_room_assoc[0].people[index]
                 person.allocated_office = None
             else:
-                prev_room_assoc = list(filter(lambda obj: obj.name == person.allocated_livingroom.name, self.rooms))
+                prev_room_assoc = list(
+                    filter(lambda obj: obj.name == person.allocated_livingroom.name, self.rooms))
                 if len(prev_room_assoc) < 1:
                     return "Previous Living room for {} {} not found".format(person, person.full_name.upper())
-                #get index of person in previous room
-                index = [i for i, x in enumerate(prev_room_assoc[0].people) if x.id == person.id][0]
+                # get index of person in previous room
+                index = [i for i, x in enumerate(
+                    prev_room_assoc[0].people) if x.id == person.id][0]
                 del prev_room_assoc[0].people[index]
                 person.allocated_livingroom = None
-                
+
             return (self.allocate_room(person, next_room))
         else:
             return "Room called {} not found".format(new_room)
@@ -189,18 +192,12 @@ class Amity(list):
 
     def print_unallocated(self, output_path=False):
         Spinner.show()
-        if len(self.rooms) < 1:
-            return "No rooms present in Amity yet, please try adding some rooms"
-
-        # first reduce all people in all rooms, convert to generator to save memory
-        gathering = (reduce(lambda x, y: x.people + y.people, self.rooms))
-        # get all unallocated people first
+        # first get people with unallocated offices
         search = list(
-            filter(lambda person: person.allocated_office is None, gathering))
+            filter(lambda person: person.allocated_office is None, self.people))
 
-        if len(search) < 1:
-            return "No unallocations found in Amity"
-
+        if len(search) > 0:
+            print("---------- WITH UNALLOCATED OFFICE SPACE ---------\n")
         res = MyFormatter.people_format(search)
         if output_path:
             with open(output_path, "w") as f:
@@ -220,7 +217,7 @@ class Amity(list):
     def save_state(self, db=False):
         Spinner.show()
         name = db if db else "recent.db"
-        with open(name,'wb+') as f:
+        with open(name, 'wb+') as f:
             f.write(pickle.dumps(self))
         return "State saved successfuly as {}".format(name)
 
@@ -231,9 +228,8 @@ class Amity(list):
 
         if not os.path.exists(db):
             return "Target state {} not found, please check spelling".format(db)
-        with open(db,'rb') as f:
+        with open(db, 'rb') as f:
             state = pickle.loads(f.read())
             self.rooms = state.rooms
             self.people = state.people
         return "State {} loaded successfully".format(db)
-
