@@ -118,11 +118,9 @@ class Amity(list):
         return "{} {} successfully allocated to {} {}".format(person, person.full_name.upper(), room, room.name)
 
     def reallocate_person(self, id, new_room):
-        # first reduce all people in all rooms, convert to generator to save memory
-        gathering = (reduce(lambda x, y: x.people + y.people, self.rooms))
         # get people with specified id
         id = int(id)
-        person_assoc = list(filter(lambda obj: obj.id == id, gathering))
+        person_assoc = list(filter(lambda obj: obj.id == id, self.people))
         if len(person_assoc) < 1:
             return "Person with identiifer {} not found".format(id)
         person = person_assoc[0]  # person is the first object
