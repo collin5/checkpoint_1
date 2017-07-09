@@ -14,6 +14,7 @@ class Office(Room):
 
     @classmethod
     def with_name(ctx, name):
+        """Creates office instance with provided name """
         return ctx(name)
 
     def __str__(self):

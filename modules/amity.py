@@ -26,6 +26,7 @@ class Amity(list):
         self.people = []
 
     def create_room(self, *args):
+        """Creates new rooms in this instance"""
         Spinner.show()
         args = args[0][0].split()  # get arguments
 
@@ -107,6 +108,7 @@ class Amity(list):
 
     @Validate.validate_allocation
     def allocate_room(self, person, room):
+        """Allocates person to room using id"""
         # set person attribute according to room instance
         if isinstance(room, Office):
             person.allocated_office = room
@@ -118,6 +120,7 @@ class Amity(list):
         return "{} {} successfully allocated to {} {}".format(person, person.full_name.upper(), room, room.name)
 
     def reallocate_person(self, id, new_room):
+        """Rallocates person from previous room to new room """
         # get people with specified id
         try:
             id = int(id)
@@ -169,6 +172,7 @@ class Amity(list):
             return "Room called {} not found".format(new_room)
 
     def load_people(self, file_path=False):
+        """Creates people in this instance from file"""
         Spinner.show()
         if file_path:
             if not os.path.exists(file_path):
@@ -182,6 +186,7 @@ class Amity(list):
             return "Oops, file path not found !"
 
     def print_allocations(self, output_path=False):
+        """Prints current room allocations in this instance """
         Spinner.show()
         # get rooms with people allocated to them
         search = list(filter(lambda room: len(room.people) > 0, self.rooms))
@@ -200,6 +205,7 @@ class Amity(list):
             return res
 
     def print_unallocated(self, output_path=False):
+        """Prints unallocated people in amity """
         Spinner.show()
         # first get people with unallocated offices
         search = list(
@@ -216,6 +222,7 @@ class Amity(list):
             return res
 
     def print_room(self, room_name):
+        """Prints content of specified room name """
         Spinner.show()
         search = list(filter(lambda room: room.name.lower()
                              == room_name.lower(), self.rooms))
@@ -224,6 +231,7 @@ class Amity(list):
         return MyFormatter.room_format(search)
 
     def save_state(self, db=False):
+        """Saves current state of this instance to file"""
         Spinner.show()
         name = db if db else "recent.db"
         with open(name, 'wb+') as f:
@@ -231,6 +239,7 @@ class Amity(list):
         return "State saved successfuly as {}".format(name)
 
     def load_state(self, db=False):
+        """Loads saved state from file"""
         Spinner.show()
         if not db:
             return "Please specify target state, use 'recent.db' to get the recently saved"

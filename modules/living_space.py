@@ -13,6 +13,7 @@ class LivingSpace(Room):
 
     @classmethod
     def with_name(ctx, name):
+        """Creates living room instance with provided name """
         return ctx(name)
 
     def __str__(self):

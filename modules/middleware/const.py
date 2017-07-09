@@ -5,7 +5,9 @@
 
 
 class Enum(set):
+    """Class to generate enums from input"""
     def __getattr__(self, name):
+        """Returns Enum name"""
         if name in self:
             return name
         raise AttributeError

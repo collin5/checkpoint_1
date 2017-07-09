@@ -17,13 +17,16 @@ class Person:
 
     @classmethod
     def create_from_name(ctx, person_name):
+        """Create person object from provided name"""
         return ctx(person_name, 'N')
 
     @property
     def full_name(self):
+        """Return person full name as an attr"""
         return "{} {}".format(self.first_name, self.last_name)
 
     @staticmethod
     @FileIO.generate_pk_with_file
     def get_ID(*args, **kwargs):
+        """Create unique primary key with auto increment for each person object"""
         return args[0]['PK']

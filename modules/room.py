@@ -12,5 +12,3 @@ class Room(list):
         super(Room, self).__init__()
         self.name, self.capacity, self.people = name, capacity, people
 
-    def add_people(*args):
-        pass
