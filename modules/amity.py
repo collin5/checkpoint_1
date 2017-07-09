@@ -42,7 +42,7 @@ class Amity(list):
             # check for duplicates
             similar = list(filter(lambda room: room.name.lower()
                                   == label.lower(), self.rooms))
-            if len(similar) > 0:
+            if similar:
                 print(
                     "\nRoom called {} already exists, please try a different room name".format(label))
             else:
@@ -84,7 +84,7 @@ class Amity(list):
         # Get empty living rooms
         empty_living_rooms = list(filter(lambda room: isinstance(
             room, LivingSpace) and (len(room.people) < room.capacity), self.rooms))
-        if(len(empty_offices) < 1):
+        if not empty_offices:
             return "No empty offices found in Amity"
         else:
             # Randomly allocate office
@@ -94,7 +94,7 @@ class Amity(list):
         # Then living room with choice
         if(accomodation):
             if isinstance(new_person, Fellow):
-                if len(empty_living_rooms) < 1:
+                if not empty_living_rooms:
                     return "No empty living rooms to allocate this fellow"
                 else:
                     # Randomly allocate living space
@@ -124,7 +124,7 @@ class Amity(list):
         except Exception as e:
             return "Invalid id"
         person_assoc = list(filter(lambda obj: obj.id == id, self.people))
-        if len(person_assoc) < 1:
+        if not person_assoc:
             return "Person with identiifer {} not found".format(id)
         person = person_assoc[0]  # person is the first object
 
@@ -133,7 +133,7 @@ class Amity(list):
         next_room = next_room_assoc[0]
 
         # Return if room not found
-        if(len(next_room_assoc) > 0):
+        if next_room_assoc:
             # check if instance and allocate with same type
             if isinstance(next_room_assoc[0], Office):
                 #just allocate if was previously unallocated
@@ -141,7 +141,7 @@ class Amity(list):
                     return (self.allocate_room(person, next_room))
                 prev_room_assoc = list(
                     filter(lambda obj: obj.name == person.allocated_office.name, self.rooms))
-                if len(prev_room_assoc) < 1:
+                if not prev_room_assoc:
                     return "Previous office for {} {} not found".format(person, person.full_name.upper())
                 # get index of person in previous room
                 index = [i for i, x in enumerate(
@@ -156,7 +156,7 @@ class Amity(list):
                     return (self.allocate_room(person, next_room))
                 prev_room_assoc = list(
                     filter(lambda obj: obj.name == person.allocated_livingroom.name, self.rooms))
-                if len(prev_room_assoc) < 1:
+                if not prev_room_assoc:
                     return "Previous Living room for {} {} not found".format(person, person.full_name.upper())
                 # get index of person in previous room
                 index = [i for i, x in enumerate(
@@ -185,7 +185,7 @@ class Amity(list):
         Spinner.show()
         # get rooms with people allocated to them
         search = list(filter(lambda room: len(room.people) > 0, self.rooms))
-        if len(search) < 1:
+        if not search:
             return "No allocations found in Amity"
 
         # get formatted output of the allocations
@@ -205,7 +205,7 @@ class Amity(list):
         search = list(
             filter(lambda person: person.allocated_office is None, self.people))
 
-        if len(search) > 0:
+        if not search:
             print("\n---------- WITH UNALLOCATED OFFICE SPACE ---------\n")
         res = MyFormatter.people_format(search)
         if output_path:
@@ -219,7 +219,7 @@ class Amity(list):
         Spinner.show()
         search = list(filter(lambda room: room.name.lower()
                              == room_name.lower(), self.rooms))
-        if len(search) < 1:
+        if not search:
             return "Room with name {} not found in amity, please check spelling and try again".format(room_name)
         return MyFormatter.room_format(search)
 

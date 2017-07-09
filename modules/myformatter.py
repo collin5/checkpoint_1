@@ -11,12 +11,12 @@ class MyFormatter:
     @staticmethod
     def room_format(room_assoc):
         res = ""
-        if len(room_assoc) > 0:
+        if room_assoc:
             for room in room_assoc:
                 res += "\n\n" + room.name.upper() + "\n-------------------------------------\n"
 
                 people_str = ""
-                if len(room.people) > 0:
+                if room.people:
                     for person in room.people:
                         people_str += ", [ID - {} ] {} ".format(
                             person.id, person.full_name.upper())
@@ -32,7 +32,7 @@ class MyFormatter:
     @staticmethod
     def people_format(people_assoc):
         res = ""
-        if len(people_assoc) > 0:
+        if people_assoc:
             for person in people_assoc:
                 res += ", [ID - {} ] {} ".format(person.id,
                                                  person.full_name.upper())
