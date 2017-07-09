@@ -4,9 +4,11 @@
 # @Last modified time: 2017-06-10T13:20:25+03:00
 
 from modules.middleware.fileiointerface import FileIO
+from abc import ABCMeta
 
 
 class Person:
+    __metaclass__ = ABCMeta
 
     def __init__(self, person_name, accomodation):
         self.id = Person.get_ID()  # get person ID autoincrement
