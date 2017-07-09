@@ -6,13 +6,11 @@
 
 from .room import Room
 
-MAX_PERSONS = 6  # office only allows maximum of 6 people
-
 
 class Office(Room):
 
     def __init__(self, name, people=[]):
-        super(Office, self).__init__(name, MAX_PERSONS, people)
+        super(Office, self).__init__(name, 6, people)
 
     @classmethod
     def with_name(ctx, name):
