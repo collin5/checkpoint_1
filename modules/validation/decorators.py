@@ -8,10 +8,7 @@ from modules.staff import Staff
 from modules.office import Office
 
 
-class Validate(object):
-
-    def __init__(self):
-        super(Validate, self).__init__()
+class Validate:
 
     @staticmethod
     def validate_allocation(func):

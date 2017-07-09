@@ -13,7 +13,7 @@ amity = Amity()  # Create amity interface
 class AmityInterface(object):
 
     def __init__(self, action, *args, **kwargs):
-        super(AmityInterface, self).__init__()
+        pass
 
     def __call__(func, action, *args, **kwargs):
         # map actions with corresponding functions

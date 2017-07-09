@@ -6,7 +6,7 @@
 # Last Modified: 28.06.2017
 
 
-class MyFormatter(object):
+class MyFormatter:
 
     @staticmethod
     def room_format(room_assoc):

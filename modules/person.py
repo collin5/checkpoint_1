@@ -6,11 +6,9 @@
 from modules.middleware.fileiointerface import FileIO
 
 
-class Person(object):
+class Person:
 
     def __init__(self, person_name, accomodation):
-        super(Person, self).__init__()
-
         self.id = Person.get_ID()  # get person ID autoincrement
         self.first_name, self.last_name = person_name.split(' ')
         self.accomodation = accomodation
