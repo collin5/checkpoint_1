@@ -119,7 +119,10 @@ class Amity(list):
 
     def reallocate_person(self, id, new_room):
         # get people with specified id
-        id = int(id)
+        try:
+            id = int(id)
+        except Exception as e:
+            return "Invalid id"
         person_assoc = list(filter(lambda obj: obj.id == id, self.people))
         if len(person_assoc) < 1:
             return "Person with identiifer {} not found".format(id)
@@ -146,6 +149,8 @@ class Amity(list):
                 del prev_room_assoc[0].people[index]
                 person.allocated_office = None
             else:
+                if not hasattr(person, 'allocated_livingroom'):
+                    return "Can not allocated living rooms to non fellows"
                 #also just allocate if was previously unallocated
                 if person.allocated_livingroom is None:
                     return (self.allocate_room(person, next_room))
