@@ -133,6 +133,9 @@ class Amity(list):
         if(len(next_room_assoc) > 0):
             # check if instance and allocate with same type
             if isinstance(next_room_assoc[0], Office):
+                #just allocate if was previously unallocated
+                if person.allocated_office is None:
+                    return (self.allocate_room(person, next_room))
                 prev_room_assoc = list(
                     filter(lambda obj: obj.name == person.allocated_office.name, self.rooms))
                 if len(prev_room_assoc) < 1:
@@ -143,6 +146,9 @@ class Amity(list):
                 del prev_room_assoc[0].people[index]
                 person.allocated_office = None
             else:
+                #also just allocate if was previously unallocated
+                if person.allocated_livingroom is None:
+                    return (self.allocate_room(person, next_room))
                 prev_room_assoc = list(
                     filter(lambda obj: obj.name == person.allocated_livingroom.name, self.rooms))
                 if len(prev_room_assoc) < 1:
@@ -195,7 +201,7 @@ class Amity(list):
             filter(lambda person: person.allocated_office is None, self.people))
 
         if len(search) > 0:
-            print("---------- WITH UNALLOCATED OFFICE SPACE ---------\n")
+            print("\n---------- WITH UNALLOCATED OFFICE SPACE ---------\n")
         res = MyFormatter.people_format(search)
         if output_path:
             with open(output_path, "w") as f:
