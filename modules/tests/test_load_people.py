@@ -9,6 +9,7 @@ from unittest import TestCase
 from modules.amity import Amity
 import os
 
+
 class LoadPeopleTestCase(TestCase):
 
     def setUp(self):
@@ -17,14 +18,13 @@ class LoadPeopleTestCase(TestCase):
     def test_load_people_successfully(self):
         self.amity.create_room(['office nania'])
         buffer_str = "COLLINS A FELLOW"
-        #first write str to file
+        # first write str to file
         with open("test_file_load_people.txt", 'w') as f:
             f.write(buffer_str)
 
-        #now load from file
+        # now load from file
         res = self.amity.load_people("test_file_load_people.txt")
         self.assertTrue(res)
-        os.system("rm test_file_load_people.txt")
 
     def test_load_people_successfully_2(self):
         self.amity.create_room(['office ruby'])
@@ -35,13 +35,15 @@ class LoadPeopleTestCase(TestCase):
             f.write(buffer_str)
 
         self.amity.load_people("test_file_load_people.txt")
-        self.assertEqual(len(self.amity.rooms[0].people) - initial_people_count, 1)
-        os.system("rm test_file_load_people.txt")
-
+        self.assertEqual(
+            len(self.amity.rooms[0].people) - initial_people_count, 1)
 
     def test_load_people_invalid_file_name(self):
         self.amity.create_room(['office ruby'])
         err = self.amity.load_people("lwlwlwllwl.txt")
-        self.assertEqual(err.lower(), "file path lwlwlwllwl.txt doesn't exist, please try again")
+        self.assertEqual(
+            err.lower(), "file path lwlwlwllwl.txt doesn't exist, please try again")
 
-
+    def tearDown(self):
+        if os.path.exists("test_file_load_people.txt"):
+            os.system("rm test_file_load_people.txt")

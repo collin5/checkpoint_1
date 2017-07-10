@@ -42,6 +42,8 @@ class PrintAllocationsTestCase(TestCase):
         self.amity.add_person('collins', 'a', 'fellow', True)
         msg = self.amity.print_allocations("test_allocations.txt")
         self.assertEqual(msg.lower(),"allocations successfully written to file test_allocations.txt." )
-        #do clean up
-        os.system('rm test_allocations.txt')
+
+    def tearDown(self):
+        if os.path.exists("test_allocations.txt"):
+            os.sytem('rm test_allocations.txt')
 
