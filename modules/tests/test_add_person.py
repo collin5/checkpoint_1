@@ -24,14 +24,18 @@ class TestAddPerson(TestCase):
 
     def test_add_more_people_successfully(self):
         initial_people_count = len(self.amity.people)
-        self.amity.add_person("Mbithe", "Nzomo", "Fellow")
-        self.amity.add_person("John", "A", "Fellow")
+        call_1 = self.amity.add_person("Mbithe", "Nzomo", "Fellow")
+        self.assertTrue(call_1)
+        call_2 = self.amity.add_person("John", "A", "Fellow")
+        self.assertTrue(call_2)
         self.assertEqual(len(self.amity.people) - initial_people_count, 2)
 
     def test_add_people_different_types(self):
         initial_people_count = len(self.amity.people)
-        self.amity.add_person("Collins", "Abitekaniza", 'Fellow')
-        self.amity.add_person("Josh", "A", "Staff")
+        call_fellow = self.amity.add_person("Collins", "Abitekaniza", 'Fellow')
+        self.assertTrue(call_fellow)
+        call_staff = self.amity.add_person("Josh", "A", "Staff")
+        self.assertTrue(call_staff)
         self.assertEqual(len(self.amity.people) - initial_people_count, 2)
 
     def test_person_type(self):
@@ -58,6 +62,7 @@ class TestAddPerson(TestCase):
 
     def test_add_person_without_room_in_amity(self):
         self.amity.rooms[:] = []
-        msg = self.amity.add_person("Collins","A","fellow")
-        self.assertEqual(msg.lower(), "there are no empty offices in amity")
+        res = self.amity.add_person("Collins","A","fellow")
+        self.assertTrue(res)
+        
 

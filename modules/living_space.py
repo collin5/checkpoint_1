@@ -5,16 +5,15 @@
 
 from .room import Room
 
-MAX_PERSONS = 4  # Living space only allows a maximum of 4 people
-
 
 class LivingSpace(Room):
 
     def __init__(self, room_name, people=[]):
-        super(LivingSpace, self).__init__(room_name, MAX_PERSONS, people)
+        super(LivingSpace, self).__init__(room_name, 4, people)
 
     @classmethod
     def with_name(ctx, name):
+        """Creates living room instance with provided name """
         return ctx(name)
 
     def __str__(self):

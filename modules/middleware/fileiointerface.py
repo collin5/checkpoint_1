@@ -6,10 +6,7 @@ import json
 import os
 
 
-class FileIO(object):
-
-    def __init__(self):
-        super(FileIO, self).__init__()
+class FileIO:
 
     @staticmethod
     def generate_pk_with_file(func):

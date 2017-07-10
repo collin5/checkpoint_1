@@ -15,6 +15,7 @@ class Fellow(Person):
 
     @classmethod
     def with_name(ctx, name, accomodation=False):
+        """Creates fellow instance with provided name """
         return Fellow(name, accomodation)
 
     def __str__(self):
