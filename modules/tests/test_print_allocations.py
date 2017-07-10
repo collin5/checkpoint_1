@@ -45,5 +45,5 @@ class PrintAllocationsTestCase(TestCase):
 
     def tearDown(self):
         if os.path.exists("test_allocations.txt"):
-            os.sytem('rm test_allocations.txt')
+            os.system('rm test_allocations.txt')
 
