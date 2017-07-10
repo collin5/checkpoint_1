@@ -12,3 +12,9 @@ Amity is random room allocator to Staff members and fellows.
 ## Usage
 For usage, use the help command followed by the command to get information about it's usage i.e
    `help <command_name>`
+
+
+## Screenshots
+![Alt text](/screenshots/1.png?raw=true "Screenshot")
+![Alt text](/screenshots/2.png?raw=true "Screenshot")
+![Alt text](/screenshots/3.png?raw=true "Screenshot")
