@@ -211,9 +211,17 @@ class Amity(list):
         search = list(
             filter(lambda person: person.allocated_office is None, self.people))
 
-        if not search:
-            print("\n---------- WITH UNALLOCATED OFFICE SPACE ---------\n")
+        if search:
+            print("\n---------- WITH UNALLOCATED OFFICE SPACE ---------")
         res = MyFormatter.people_format(search)
+        
+        # get with uallocated living rooms
+        fellows = list(
+                filter(lambda person: isinstance(person, Fellow), self.people))
+        search = list(
+                filter(lambda person: person.allocated_livingroom is None, fellows))
+        if search:
+            res+="\n\n --------FELLOWS WITH NO LIVING ROOOMS ---------\n" + MyFormatter.people_format(search)
         if output_path:
             with open(output_path, "w") as f:
                 f.write(res)
