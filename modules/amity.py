@@ -207,6 +207,10 @@ class Amity(list):
     def print_unallocated(self, output_path=False):
         """Prints unallocated people in amity """
         Spinner.show()
+        if not self.rooms:
+            return "No rooms present in amity yet, please try adding some rooms"
+        if not self.people:
+            return "No unallocations found in amity"
         # first get people with unallocated offices
         search = list(
             filter(lambda person: person.allocated_office is None, self.people))
